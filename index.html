@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive — Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #000;
+      background: #fff;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    a { color: #00e; text-decoration: underline; }
+    a:visited { color: #551a8b; }
+    a:hover { color: #f00; }
+
+    hr {
+      border: none;
+      border-top: 1px solid #000;
+      margin: 12px 0;
+    }
+
+    /* Topbar */
+    #topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 16px;
+      letter-spacing: 0.03em;
+    }
+
+    #topbar a {
+      font-size: 11px;
+      color: #00e;
+      text-decoration: underline;
+    }
+
+    #topbar a:visited { color: #551a8b; }
+
+    /* Main layout */
+    #layout {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      min-height: calc(100vh - 80px);
+      padding-top: 40px;
+    }
+
+    /* Nav */
+    #nav {
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 100px;
+      position: sticky;
+      top: 20px;
+      align-self: flex-start;
+    }
+
+    #nav a { display: block; }
+
+    /* Manifesto — right side */
+    #manifesto {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      background: #fff;
+      min-height: calc(100vh - 80px);
+      padding-top: 40px;
+    }
+
+    #manifesto-inner {
+      text-align: left;
+      color: #000;
+    }
+
+    .letter {
+      font-size: 13px;
+      line-height: 2;
+      color: #000;
+      max-width: 360px;
+    }
+
+    .letter p {
+      margin-bottom: 20px;
+    }
+
+    .letter p:last-child {
+      margin-bottom: 0;
+    }
+
+    .letter .salutation {
+      margin-bottom: 28px;
+      color: #888;
+    }
+
+    .letter .sign-off {
+      margin-top: 32px;
+      color: #888;
+    }
+
+    /* Footer */
+    #footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="topbar">
+    <span id="time-on-earth">spawn time on earth: calculating...</span>
+    <span>reach out &nbsp;&nbsp;<a href="https://instagram.com/d.hamanjo" target="_blank">instagram // @d.hamanjo</a></span>
+  </div>
+
+  <hr>
+
+  <div id="layout">
+
+    <div id="nav">
+      <a href="objects.html">Objects</a>
+      <a href="chronology.html">Chronology</a>
+      <a href="lectures.html">Lectures</a>
+      <a href="trash.html" style="color:#bbb;text-decoration:line-through;pointer-events:auto;">Trash</a>
+    </div>
+
+    <div id="manifesto">
+      <div id="manifesto-inner">
+        <div class="letter">
+          <p class="salutation">To Advanced Disciples,</p>
+          <p>for those who have eyes to see<br>and ears to hear:</p>
+          <p>sit on the plinth and pick your struggle.</p>
+          <p class="sign-off">— d.h</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr>
+
+  <div id="footer">
+    &copy; 2026 Your Name &nbsp;·&nbsp; All rights reserved
+  </div>
+
+  <script>
+    const BIRTH = new Date(2001, 8, 3);
+    function update() {
+      const now = new Date();
+      const diff = now - BIRTH;
+      const s = Math.floor(diff / 1000);
+      const sec = s % 60;
+      const m = Math.floor(s / 60);
+      const min = m % 60;
+      const h = Math.floor(m / 60);
+      const hrs = h % 24;
+      const totalDays = Math.floor(h / 24);
+      const years = Math.floor(totalDays / 365.25);
+      const days = Math.floor(totalDays % 365.25);
+      document.getElementById("time-on-earth").textContent =
+        "spawn time on earth: " + years + "y " + days + "d " +
+        String(hrs).padStart(2,"0") + "h " +
+        String(min).padStart(2,"0") + "m " +
+        String(sec).padStart(2,"0") + "s";
+    }
+    update();
+    setInterval(update, 1000);
+  </script>
+
+</body>
+</html>

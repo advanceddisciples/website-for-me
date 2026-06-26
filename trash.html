@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trash — Archive</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #000;
+      background: #fff;
+      padding: 20px;
+    }
+
+    a { color: #00e; text-decoration: underline; }
+    a:visited { color: #551a8b; }
+    a:hover { color: #f00; }
+
+    hr { border: none; border-top: 1px solid #000; margin: 12px 0; }
+
+    #topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 16px;
+      letter-spacing: 0.03em;
+    }
+
+    #topbar a { font-size: 11px; color: #00e; text-decoration: underline; }
+    #topbar a:visited { color: #551a8b; }
+
+    #layout {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    #nav {
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 100px;
+      position: sticky;
+      top: 20px;
+      align-self: flex-start;
+    }
+
+    #nav a { display: block; }
+    #nav a.nav-trash { color: #bbb; text-decoration: line-through; }
+    #nav a.nav-trash:hover { color: #bbb; }
+
+    #content {
+      flex: 1;
+      max-width: 800px;
+    }
+
+    .page-label {
+      font-size: 11px;
+      color: #bbb;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 28px;
+    }
+
+    /* Trash item */
+    .trash-item {
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px dotted #ddd;
+      opacity: 0.75;
+    }
+
+    .trash-item:last-of-type {
+      border-bottom: none;
+    }
+
+    .trash-meta {
+      font-size: 11px;
+      color: #bbb;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 5px;
+    }
+
+    .trash-item h2 {
+      font-size: 14px;
+      font-weight: bold;
+      color: #888;
+      text-decoration: line-through;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .burn-timer {
+      font-size: 11px;
+      color: #c0392b;
+      margin-top: 6px;
+    }
+
+    .burn-timer .label {
+      color: #bbb;
+      margin-right: 4px;
+    }
+
+    #footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="topbar">
+    <span id="time-on-earth">spawn time on earth: calculating...</span>
+    <span>reach out &nbsp;&nbsp;<a href="https://instagram.com/d.hamanjo" target="_blank">instagram // @d.hamanjo</a></span>
+  </div>
+
+  <hr>
+
+  <div id="layout">
+
+    <div id="nav">
+      <a href="objects.html">Objects</a>
+      <a href="chronology.html">Chronology</a>
+      <a href="lectures.html">Lectures</a>
+      <a href="trash.html" class="nav-trash">Trash</a>
+    </div>
+
+    <div id="content">
+
+      <div class="page-label">[ trash ]</div>
+
+      <!-- TRASH ITEM 1 -->
+      <div class="trash-item">
+        <div class="trash-meta">added 2024-03-10</div>
+        <h2>Something I made that I am not proud of</h2>
+        <div class="burn-timer">
+          <span class="label">burns in</span>
+          <span class="countdown" data-burn="2025-03-10">calculating...</span>
+        </div>
+      </div>
+
+      <!-- TRASH ITEM 2 -->
+      <div class="trash-item">
+        <div class="trash-meta">added 2023-11-01</div>
+        <h2>Another thing best forgotten</h2>
+        <div class="burn-timer">
+          <span class="label">burns in</span>
+          <span class="countdown" data-burn="2024-11-01">calculating...</span>
+        </div>
+      </div>
+
+      <!-- Add more trash items following the same pattern.
+           Set data-burn to the date it should be "burned" (YYYY-MM-DD) -->
+
+    </div>
+  </div>
+
+  <hr>
+
+  <div id="footer">
+    &copy; 2026 Your Name &nbsp;·&nbsp; All rights reserved
+  </div>
+
+  <script>
+    // Spawn counter
+    const BIRTH = new Date(2001, 8, 3);
+    function updateSpawn() {
+      const now = new Date();
+      const diff = now - BIRTH;
+      const s = Math.floor(diff / 1000);
+      const sec = s % 60;
+      const m = Math.floor(s / 60);
+      const min = m % 60;
+      const h = Math.floor(m / 60);
+      const hrs = h % 24;
+      const totalDays = Math.floor(h / 24);
+      const years = Math.floor(totalDays / 365.25);
+      const days = Math.floor(totalDays % 365.25);
+      document.getElementById("time-on-earth").textContent =
+        "spawn time on earth: " + years + "y " + days + "d " +
+        String(hrs).padStart(2,"0") + "h " +
+        String(min).padStart(2,"0") + "m " +
+        String(sec).padStart(2,"0") + "s";
+    }
+
+    // Burn countdown
+    function updateBurn() {
+      const now = new Date();
+      document.querySelectorAll(".countdown").forEach(el => {
+        const burnDate = new Date(el.dataset.burn);
+        const diff = burnDate - now;
+        if (diff <= 0) {
+          el.textContent = "burned.";
+          el.style.color = "#bbb";
+          el.closest(".trash-item").style.opacity = "0.3";
+          return;
+        }
+        const s = Math.floor(diff / 1000);
+        const sec = s % 60;
+        const m = Math.floor(s / 60);
+        const min = m % 60;
+        const h = Math.floor(m / 60);
+        const hrs = h % 24;
+        const days = Math.floor(h / 24);
+        el.textContent = days + "d " +
+          String(hrs).padStart(2,"0") + "h " +
+          String(min).padStart(2,"0") + "m " +
+          String(sec).padStart(2,"0") + "s";
+      });
+    }
+
+    updateSpawn();
+    updateBurn();
+    setInterval(() => { updateSpawn(); updateBurn(); }, 1000);
+  </script>
+
+</body>
+</html>
